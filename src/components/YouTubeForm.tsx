@@ -61,9 +61,18 @@ export const YouTubeForm = () => {
     watch,
     getValues,
     setValue,
+    reset,
   } = form;
   // const { errors } = formState;
-  const { errors, touchedFields, dirtyFields, isDirty, isValid } = formState;
+  const {
+    errors,
+    touchedFields,
+    dirtyFields,
+    isDirty,
+    isValid,
+    isSubmitting,
+    isSubmitSuccessful,
+  } = formState;
   // const { errors, isDirty } = formState;
   // console.log(touchedFields);
   // console.log(dirtyFields);
@@ -106,6 +115,12 @@ export const YouTubeForm = () => {
   //   });
   //   return () => subscription.unsubscribe();
   // }, [watch]);
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [isSubmitSuccessful, reset]);
 
   return (
     <>
@@ -294,7 +309,13 @@ export const YouTubeForm = () => {
             Set age
           </button>
           <button
-            disabled={!isDirty || !isValid}
+            className="flex self-center rounded-md my-2 mx-2 p-1 bg-gray-900 w-fit"
+            onClick={() => reset()}
+          >
+            Reset
+          </button>
+          <button
+            disabled={!isDirty || !isValid || isSubmitting}
             className="flex self-center rounded-md my-2 mx-2 p-1 bg-gray-900 w-fit"
           >
             Submit
