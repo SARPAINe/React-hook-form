@@ -52,7 +52,7 @@ export const YouTubeForm = () => {
     },
   });
 
-  const { register, control, handleSubmit, formState, watch } = form;
+  const { register, control, handleSubmit, formState, watch, getValues } = form;
   const { errors } = formState;
 
   const { fields, append, remove } = useFieldArray({
@@ -64,15 +64,21 @@ export const YouTubeForm = () => {
     console.log("Form submitted", data);
   };
 
+  const handleGetValues = () => {
+    console.log(getValues(["username", "email", "social"]));
+    //get all values
+    // console.log(getValues());
+  };
+
   // const watchUsername = watch("username");
   renderCount++;
 
-  useEffect(() => {
-    const subscription = watch((value) => {
-      console.log(value);
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
+  // useEffect(() => {
+  //   const subscription = watch((value) => {
+  //     console.log(value);
+  //   });
+  //   return () => subscription.unsubscribe();
+  // }, [watch]);
 
   return (
     <>
@@ -242,7 +248,9 @@ export const YouTubeForm = () => {
           />
           <p className="text-red-700">{errors?.password?.message}</p>
         </div>
-
+        <button type="button" onClick={handleGetValues}>
+          Get all values
+        </button>
         <button className="flex self-center rounded-md my-2 mx-2 p-1 bg-gray-900 w-fit">
           Submit
         </button>
