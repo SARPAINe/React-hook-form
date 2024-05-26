@@ -6,6 +6,10 @@ type FormValues = {
   email: string;
   channel: string;
   password: string;
+  social: {
+    twitter: string;
+    facebook: string;
+  };
 };
 
 export const YouTubeForm = () => {
@@ -25,7 +29,13 @@ export const YouTubeForm = () => {
 
   const form = useForm<FormValues>({
     defaultValues: {
-      username: "Batwoman",
+      username: "Batman",
+      email: "",
+      channel: "",
+      social: {
+        twitter: "",
+        facebook: "",
+      },
     },
   });
 
@@ -96,15 +106,33 @@ export const YouTubeForm = () => {
           />
           <p className="text-red-700">{errors?.channel?.message}</p>
         </div>
+        <div className="mx-2 flex flex-col">
+          <label htmlFor="twitter">Twitter</label>
+          <input
+            type="text"
+            id="twitter"
+            {...register("social.twitter")}
+            className="border border-white border-solid rounded-md bg-gray-800  focus:outline-none p-1"
+          />
+        </div>
+        <div className="mx-2 flex flex-col">
+          <label htmlFor="facebook">Facebook</label>
+          <input
+            type="text"
+            id="facebook"
+            {...register("social.facebook")}
+            className="border border-white border-solid rounded-md bg-gray-800  focus:outline-none p-1"
+          />
+        </div>
         <div className="flex flex-col mx-2">
-          <label htmlFor="channel">Password</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
             {...register("password", { required: "Password is required" })}
             className="border border-white border-solid rounded-md bg-gray-800  focus:outline-none p-1"
           />
-          <p className="text-red-700">{errors?.channel?.message}</p>
+          <p className="text-red-700">{errors?.password?.message}</p>
         </div>
 
         <button className="flex self-center rounded-md my-2 mx-2 p-1 bg-gray-900 w-fit">
