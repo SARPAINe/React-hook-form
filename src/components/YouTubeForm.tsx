@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 
 type FormValues = {
@@ -11,6 +11,9 @@ type FormValues = {
     facebook: string;
   };
   phoneNumbers: string[];
+  phNumbers: {
+    number: string;
+  }[];
 };
 
 export const YouTubeForm = () => {
@@ -38,11 +41,17 @@ export const YouTubeForm = () => {
         facebook: "",
       },
       phoneNumbers: ["", ""],
+      phNumbers: [{ number: "" }],
     },
   });
 
   const { register, control, handleSubmit, formState } = form;
   const { errors } = formState;
+
+  const { fields, append, remove } = useFieldArray({
+    name: "phNumbers",
+    control,
+  });
 
   const onSubmit = (data: FormValues) => {
     console.log("Form submitted", data);
@@ -146,6 +155,32 @@ export const YouTubeForm = () => {
             className="border border-white border-solid rounded-md bg-gray-800  focus:outline-none p-1"
           />
         </div>
+
+        <div className="mx-2 flex flex-col">
+          <label>List of phone numbers</label>
+          <div>
+            {fields.map((field, index) => {
+              return (
+                <div key={field.id} className="flex flex-col">
+                  <input
+                    type="text"
+                    {...register(`phNumbers.${index}.number`)}
+                    className="border border-white border-solid rounded-md bg-gray-800  focus:outline-none p-1"
+                  />
+                  {index > 0 && (
+                    <button type="button" onClick={() => remove(index)}>
+                      Remove
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+            <button type="button" onClick={() => append({ number: "" })}>
+              Add phone number
+            </button>
+          </div>
+        </div>
+
         <div className="flex flex-col mx-2">
           <label htmlFor="password">Password</label>
           <input
