@@ -1,4 +1,4 @@
-import { useFieldArray, useForm } from "react-hook-form";
+import { FieldErrors, useFieldArray, useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import { useEffect } from "react";
 
@@ -41,6 +41,7 @@ export const YouTubeForm = () => {
       username: "Batman",
       email: "",
       channel: "",
+      password: "",
       social: {
         twitter: "",
         facebook: "",
@@ -62,11 +63,12 @@ export const YouTubeForm = () => {
     setValue,
   } = form;
   // const { errors } = formState;
-  const { errors, touchedFields, dirtyFields, isDirty } = formState;
+  const { errors, touchedFields, dirtyFields, isDirty, isValid } = formState;
   // const { errors, isDirty } = formState;
   // console.log(touchedFields);
   // console.log(dirtyFields);
   // console.log({ touchedFields, dirtyFields, isDirty });
+  console.log(isDirty, isValid);
 
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
@@ -75,6 +77,10 @@ export const YouTubeForm = () => {
 
   const onSubmit = (data: FormValues) => {
     console.log("Form submitted", data);
+  };
+
+  const onError = (errors: FieldErrors<FormValues>) => {
+    console.log("Form errors", errors);
   };
 
   const handleGetValues = () => {
@@ -106,7 +112,7 @@ export const YouTubeForm = () => {
       <h1>YouTube Form {renderCount / 2}</h1>
       {/* <h2>Watched value: {watchUsername}</h2> */}
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit, onError)}
         noValidate
         className="flex flex-col ml-auto mr-auto w-fit"
       >
@@ -287,7 +293,10 @@ export const YouTubeForm = () => {
           >
             Set age
           </button>
-          <button className="flex self-center rounded-md my-2 mx-2 p-1 bg-gray-900 w-fit">
+          <button
+            disabled={!isDirty || !isValid}
+            className="flex self-center rounded-md my-2 mx-2 p-1 bg-gray-900 w-fit"
+          >
             Submit
           </button>
         </div>
