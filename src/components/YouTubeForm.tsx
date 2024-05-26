@@ -52,7 +52,15 @@ export const YouTubeForm = () => {
     },
   });
 
-  const { register, control, handleSubmit, formState, watch, getValues } = form;
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState,
+    watch,
+    getValues,
+    setValue,
+  } = form;
   const { errors } = formState;
 
   const { fields, append, remove } = useFieldArray({
@@ -68,6 +76,14 @@ export const YouTubeForm = () => {
     console.log(getValues(["username", "email", "social"]));
     //get all values
     // console.log(getValues());
+  };
+
+  const handleSetValues = () => {
+    setValue("age", 20, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
   };
 
   // const watchUsername = watch("username");
@@ -248,12 +264,25 @@ export const YouTubeForm = () => {
           />
           <p className="text-red-700">{errors?.password?.message}</p>
         </div>
-        <button type="button" onClick={handleGetValues}>
-          Get all values
-        </button>
-        <button className="flex self-center rounded-md my-2 mx-2 p-1 bg-gray-900 w-fit">
-          Submit
-        </button>
+        <div className="flex flex-row">
+          <button
+            type="button"
+            className="flex self-center rounded-md my-2 mx-2 p-1 bg-gray-900 w-fit"
+            onClick={handleGetValues}
+          >
+            Get all values
+          </button>
+          <button
+            type="button"
+            className="flex self-center rounded-md my-2 mx-2 p-1 bg-gray-900 w-fit"
+            onClick={handleSetValues}
+          >
+            Set age
+          </button>
+          <button className="flex self-center rounded-md my-2 mx-2 p-1 bg-gray-900 w-fit">
+            Submit
+          </button>
+        </div>
       </form>
       <DevTool control={control} />
     </>
