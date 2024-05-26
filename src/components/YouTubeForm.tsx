@@ -49,8 +49,9 @@ export const YouTubeForm = () => {
       phoneNumbers: ["", ""],
       phNumbers: [{ number: "" }],
       age: 0,
-      dob: new Date(),
+      dob: new Date("2022-03-25"),
     },
+    mode: "onTouched",
   });
 
   const {
@@ -62,6 +63,7 @@ export const YouTubeForm = () => {
     getValues,
     setValue,
     reset,
+    trigger,
   } = form;
   // const { errors } = formState;
   const {
@@ -317,10 +319,25 @@ export const YouTubeForm = () => {
             Set age
           </button>
           <button
+            type="button"
             className="flex self-center rounded-md my-2 mx-2 p-1 bg-gray-900 w-fit"
             onClick={() => reset()}
           >
             Reset
+          </button>
+          <button
+            type="button"
+            className="flex self-center rounded-md my-2 mx-2 p-1 bg-gray-900 w-fit"
+            onClick={() => trigger()}
+          >
+            Validate
+          </button>
+          <button
+            type="button"
+            className="flex self-center rounded-md my-2 mx-2 p-1 bg-gray-900 w-fit"
+            onClick={() => trigger("channel")}
+          >
+            Validate channel
           </button>
           <button
             disabled={!isDirty || !isValid || isSubmitting}
