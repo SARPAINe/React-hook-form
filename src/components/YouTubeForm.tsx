@@ -14,6 +14,8 @@ type FormValues = {
   phNumbers: {
     number: string;
   }[];
+  age: number;
+  dob: Date;
 };
 
 export const YouTubeForm = () => {
@@ -42,6 +44,8 @@ export const YouTubeForm = () => {
       },
       phoneNumbers: ["", ""],
       phNumbers: [{ number: "" }],
+      age: 0,
+      dob: new Date(),
     },
   });
 
@@ -145,6 +149,12 @@ export const YouTubeForm = () => {
             })}
             className="border border-white border-solid rounded-md bg-gray-800  focus:outline-none p-1"
           />
+          <p className="text-red-700">
+            {/* {errors.phoneNumbers &&
+              errors.phoneNumbers[0] &&
+              errors.phoneNumbers[0].message} */}
+            {errors?.phoneNumbers?.[0]?.message}
+          </p>
         </div>
         <div className="mx-2 flex flex-col">
           <label htmlFor="secondary-phone">Secondary phone number</label>
@@ -179,6 +189,34 @@ export const YouTubeForm = () => {
               Add phone number
             </button>
           </div>
+        </div>
+
+        <div className="mx-2 flex flex-col">
+          <label htmlFor="age">Age</label>
+          <input
+            type="number"
+            id="age"
+            {...register("age", {
+              valueAsNumber: true,
+              required: "Age is required",
+            })}
+            className="border border-white border-solid rounded-md bg-gray-800  focus:outline-none p-1"
+          />
+          <p className="text-red-700">{errors?.age?.message}</p>
+        </div>
+
+        <div className="mx-2 flex flex-col">
+          <label htmlFor="dob">Date of birth</label>
+          <input
+            type="date"
+            id="dob"
+            {...register("dob", {
+              valueAsDate: true,
+              required: "Date of birth is required",
+            })}
+            className="border border-white border-solid rounded-md bg-gray-800  focus:outline-none p-1"
+          />
+          <p className="text-red-700">{errors?.dob?.message}</p>
         </div>
 
         <div className="flex flex-col mx-2">
