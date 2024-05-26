@@ -166,6 +166,14 @@ export const YouTubeForm = () => {
                     "This domain is not supported"
                   );
                 },
+                emailUnavailable: async (fieldValue) => {
+                  const res = await fetch(
+                    `https://jsonplaceholder.typicode.com/users?email=${fieldValue}`
+                  );
+
+                  const data = await res.json();
+                  return data.length == 0 || "Email already exists";
+                },
               },
             })}
             className="border border-white border-solid rounded-md bg-gray-800  focus:outline-none p-1"
