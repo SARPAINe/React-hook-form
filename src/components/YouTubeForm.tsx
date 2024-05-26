@@ -61,7 +61,12 @@ export const YouTubeForm = () => {
     getValues,
     setValue,
   } = form;
-  const { errors } = formState;
+  // const { errors } = formState;
+  const { errors, touchedFields, dirtyFields, isDirty } = formState;
+  // const { errors, isDirty } = formState;
+  // console.log(touchedFields);
+  // console.log(dirtyFields);
+  // console.log({ touchedFields, dirtyFields, isDirty });
 
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
@@ -259,7 +264,10 @@ export const YouTubeForm = () => {
           <input
             type="password"
             id="password"
-            {...register("password", { required: "Password is required" })}
+            {...register("password", {
+              required: "Password is required",
+              disabled: !dirtyFields.email,
+            })}
             className="border border-white border-solid rounded-md bg-gray-800  focus:outline-none p-1"
           />
           <p className="text-red-700">{errors?.password?.message}</p>
